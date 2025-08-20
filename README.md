@@ -83,6 +83,30 @@ npm run build
 npm start
 ```
 
+### 🔌 Quick MCP Setup
+
+After installing via npm, configure with your preferred AI tool:
+
+**Claude Desktop:**
+```json
+{
+  "mcpServers": {
+    "daraja": {
+      "command": "mcp-daraja",
+      "env": {
+        "DARAJA_CONSUMER_KEY": "your_key",
+        "DARAJA_CONSUMER_SECRET": "your_secret",
+        "DARAJA_BUSINESS_SHORT_CODE": "your_shortcode",
+        "DARAJA_PASS_KEY": "your_pass_key",
+        "DARAJA_ENVIRONMENT": "sandbox"
+      }
+    }
+  }
+}
+```
+
+**[📋 See complete setup guide →](docs/mcp-integration-guide.md)**
+
 ### Python
 ```bash
 cd python
@@ -99,6 +123,7 @@ php src/server.php
 
 ## 📖 Documentation
 
+- [**🔌 MCP Integration Guide**](docs/mcp-integration-guide.md) - **Complete setup for Claude Desktop, VS Code, Cursor & more**
 - [**API Reference**](docs/api-reference.md) - Detailed documentation of all MCP tools
 - [**Integration Guide**](docs/integration-guide.md) - Step-by-step integration instructions  
 - [**Configuration**](docs/configuration.md) - Environment setup and configuration

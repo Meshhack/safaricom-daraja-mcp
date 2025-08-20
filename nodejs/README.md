@@ -69,6 +69,39 @@ export DARAJA_ENVIRONMENT=sandbox
 mcp-daraja
 ```
 
+## 🔌 MCP Integration
+
+### Claude Desktop Setup
+
+Add to your Claude Desktop configuration:
+
+```json
+{
+  "mcpServers": {
+    "daraja": {
+      "command": "mcp-daraja",
+      "env": {
+        "DARAJA_CONSUMER_KEY": "your_key",
+        "DARAJA_CONSUMER_SECRET": "your_secret",
+        "DARAJA_BUSINESS_SHORT_CODE": "your_shortcode",
+        "DARAJA_PASS_KEY": "your_pass_key",
+        "DARAJA_ENVIRONMENT": "sandbox"
+      }
+    }
+  }
+}
+```
+
+### Other MCP Clients
+
+This package also works with:
+- **Claude Code CLI** - `claude mcp add daraja`
+- **VS Code** - Agent mode with MCP support
+- **Cursor IDE** - Built-in MCP integration
+- **Custom MCP clients** - Via stdio transport
+
+**[📋 Complete MCP setup guide →](https://github.com/Meshhack/safaricom-daraja-mcp/blob/main/docs/mcp-integration-guide.md)**
+
 ## ⚙️ Configuration
 
 Create a `.env` file with your Daraja API credentials:
