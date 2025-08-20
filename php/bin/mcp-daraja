@@ -1,0 +1,71 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Safaricom Daraja MCP Server - PHP Entry Point
+ * Author: Meshack Musyoka
+ */
+
+// Load Composer autoloader
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../vendor/autoload.php',
+    __DIR__ . '/../../../../vendor/autoload.php',
+];
+
+$autoloaded = false;
+foreach ($autoloadPaths as $autoloadPath) {
+    if (file_exists($autoloadPath)) {
+        require_once $autoloadPath;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    fwrite(STDERR, "Error: Composer autoloader not found. Please run 'composer install'.\n");
+    exit(1);
+}
+
+use Dotenv\Dotenv;
+use MeshackMusyoka\SafaricomDarajaMcp\Server\McpServer;
+
+// Load environment variables from .env file if it exists
+$envFile = __DIR__ . '/../.env';
+if (file_exists($envFile)) {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv->load();
+}
+
+// Validate required environment variables
+$requiredVars = [
+    'DARAJA_CONSUMER_KEY',
+    'DARAJA_CONSUMER_SECRET',
+    'DARAJA_BUSINESS_SHORT_CODE',
+    'DARAJA_PASS_KEY'
+];
+
+$missing = [];
+foreach ($requiredVars as $var) {
+    if (empty($_ENV[$var])) {
+        $missing[] = $var;
+    }
+}
+
+if (!empty($missing)) {
+    fwrite(STDERR, "Error: Required environment variables not set: " . implode(', ', $missing) . "\n");
+    fwrite(STDERR, "Please create a .env file or set these environment variables.\n");
+    fwrite(STDERR, "See .env.example for reference.\n");
+    exit(1);
+}
+
+try {
+    $server = new McpServer();
+    $server->run();
+} catch (\Throwable $e) {
+    fwrite(STDERR, "Fatal error: " . $e->getMessage() . "\n");
+    fwrite(STDERR, $e->getTraceAsString() . "\n");
+    exit(1);
+}

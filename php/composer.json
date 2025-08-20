@@ -1,0 +1,76 @@
+{
+    "name": "meshackmusyoka/safaricom-daraja-mcp",
+    "description": "MCP server for Safaricom Daraja API integration",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Meshack Musyoka",
+            "email": "meshnzai1@gmail.com",
+            "homepage": "https://github.com/Meshhack"
+        }
+    ],
+    "keywords": [
+        "safaricom",
+        "daraja",
+        "mpesa",
+        "mcp",
+        "payment",
+        "api",
+        "kenya",
+        "model-context-protocol"
+    ],
+    "homepage": "https://github.com/Meshhack/safaricom-daraja-mcp",
+    "support": {
+        "issues": "https://github.com/Meshhack/safaricom-daraja-mcp/issues",
+        "source": "https://github.com/Meshhack/safaricom-daraja-mcp"
+    },
+    "require": {
+        "php": ">=8.0",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "guzzlehttp/guzzle": "^7.8",
+        "vlucas/phpdotenv": "^5.5",
+        "monolog/monolog": "^3.5",
+        "react/socket": "^1.14",
+        "react/stream": "^1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpstan/phpstan": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "MeshackMusyoka\\SafaricomDarajaMcp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MeshackMusyoka\\SafaricomDarajaMcp\\Tests\\": "tests/"
+        }
+    },
+    "bin": [
+        "bin/mcp-daraja"
+    ],
+    "scripts": {
+        "test": "phpunit",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "analyse": "phpstan analyse",
+        "quality": [
+            "@cs-check",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
