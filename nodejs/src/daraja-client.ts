@@ -33,6 +33,9 @@ export class DarajaClient {
   private tokenExpiry: Date | null = null;
 
   constructor(config: DarajaConfig) {
+    // Validate required configuration
+    this.validateConfig(config);
+    
     this.config = config;
     this.urls = this.getUrls();
     
@@ -73,6 +76,33 @@ export class DarajaClient {
       reversal: `${base}/mpesa/reversal/v1/request`,
       generate_qr: `${base}/mpesa/qrcode/v1/generate`
     };
+  }
+
+  private validateConfig(config: DarajaConfig): void {
+    const requiredFields = [
+      'consumer_key',
+      'consumer_secret', 
+      'business_short_code',
+      'pass_key'
+    ];
+
+    const missingFields = requiredFields.filter(field => !config[field as keyof DarajaConfig]);
+    
+    if (missingFields.length > 0) {
+      throw new Error(`Missing required Daraja configuration fields: ${missingFields.join(', ')}`);
+    }
+
+    if (!['sandbox', 'production'].includes(config.environment)) {
+      throw new Error(`Invalid environment: ${config.environment}. Must be 'sandbox' or 'production'`);
+    }
+
+    // Validate initiator credentials if B2C/B2B operations might be used
+    if (config.initiator_name && !config.initiator_password) {
+      throw new Error('initiator_password is required when initiator_name is provided');
+    }
+    if (config.initiator_password && !config.initiator_name) {
+      throw new Error('initiator_name is required when initiator_password is provided');
+    }
   }
 
   private generatePassword(timestamp: string): string {
@@ -124,7 +154,7 @@ export class DarajaClient {
       this.accessToken = response.data.access_token;
       this.tokenExpiry = new Date(Date.now() + (parseInt(response.data.expires_in) * 1000));
     } catch (error) {
-      return await this.handleApiError(error as AxiosError);
+      await this.handleApiError(error as AxiosError);
     }
   }
 
@@ -423,7 +453,7 @@ export class DarajaClient {
       TransactionID: options.transaction_id,
       Amount: options.amount,
       ReceiverParty: options.receiver_party,
-      RecieverIdentifierType: options.receiver_identifier_type || '11',
+      ReceiverIdentifierType: options.receiver_identifier_type || '11',
       ResultURL: options.result_url,
       QueueTimeOutURL: options.queue_timeout_url,
       Remarks: options.remarks,

@@ -143,7 +143,7 @@ export interface ReversalRequest {
   TransactionID: string;
   Amount: number;
   ReceiverParty: string;
-  RecieverIdentifierType: '1' | '2' | '4' | '11';
+  ReceiverIdentifierType: '1' | '2' | '4' | '11';
   ResultURL: string;
   QueueTimeOutURL: string;
   Remarks: string;

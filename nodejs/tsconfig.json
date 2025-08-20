@@ -6,7 +6,7 @@
     "lib": ["ES2022"],
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": false,
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -18,11 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmitOnError": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
     "noImplicitReturns": false,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
     "exactOptionalPropertyTypes": false
   },
   "include": [
