@@ -201,5 +201,3 @@ For support and questions:
 - Review [examples](examples/)
 
 ---
-
-**Made with ❤️ in Kenya 🇰🇪**
