@@ -12,13 +12,22 @@ from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 from pydantic import ValidationError
 
-from .client import DarajaClient
-from .types import (
-    DarajaConfig, Environment, DarajaError,
-    STKPushInput, STKQueryInput, C2BRegisterInput, C2BSimulateInput,
-    B2CPaymentInput, B2BPaymentInput, AccountBalanceInput,
-    TransactionStatusInput, ReversalInput, GenerateQRInput
-)
+try:
+    from .client import DarajaClient
+    from .types import (
+        DarajaConfig, Environment, DarajaError,
+        STKPushInput, STKQueryInput, C2BRegisterInput, C2BSimulateInput,
+        B2CPaymentInput, B2BPaymentInput, AccountBalanceInput,
+        TransactionStatusInput, ReversalInput, GenerateQRInput
+    )
+except ImportError:
+    from mcp_daraja.client import DarajaClient
+    from mcp_daraja.types import (
+        DarajaConfig, Environment, DarajaError,
+        STKPushInput, STKQueryInput, C2BRegisterInput, C2BSimulateInput,
+        B2CPaymentInput, B2BPaymentInput, AccountBalanceInput,
+        TransactionStatusInput, ReversalInput, GenerateQRInput
+    )
 
 # Load environment variables
 load_dotenv()
