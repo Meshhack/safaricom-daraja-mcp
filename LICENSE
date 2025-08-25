@@ -1,21 +1,38 @@
-MIT License
+Meshack Public License (MPL) v1.0
 
 Copyright (c) 2025 Meshack Musyoka
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Permission
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This software and associated documentation (the “Software”) is made available free of charge for:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Personal use, learning, research, and non-commercial projects.
+
+Open collaboration, modification, and redistribution for non-commercial purposes.
+
+2. Commercial Use
+
+Commercial use of the Software is permitted only under the following conditions:
+
+If the Software is embedded, redistributed, or sold as part of a commercial product or service, the licensee must obtain a commercial licence agreement from the copyright holder.
+
+Such licence to be negotiated based on use case.
+
+“Commercial use” includes any activity where the Software is used to generate direct revenue (e.g., SaaS, resale, enterprise deployment).
+
+3. Attribution
+
+All copies or substantial portions of the Software must include the following notice:
+“Powered by Meshack Public License (MPL) v1.0. Copyright © 2025 Meshack Musyoka.”
+
+4. Exclusions
+
+This license does not grant rights to use the name, trademarks, or branding of the copyright holder without separate written permission.
+
+5. Warranty Disclaimer
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY.
+
+6. Future License Conversion
+
+At the discretion of the copyright holder, this license may be converted into a fully open-source license (e.g., MIT or Apache 2.0) after a defined period (e.g., 3 years).
