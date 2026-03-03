@@ -1,0 +1,17 @@
+{
+  "servers": {
+    "daraja": {
+      "type": "stdio",
+      "command": "mcp-daraja",
+      "env": {
+        "DARAJA_CONSUMER_KEY": "${env:DARAJA_CONSUMER_KEY}",
+        "DARAJA_CONSUMER_SECRET": "${env:DARAJA_CONSUMER_SECRET}",
+        "DARAJA_BUSINESS_SHORT_CODE": "${env:DARAJA_BUSINESS_SHORT_CODE}",
+        "DARAJA_PASS_KEY": "${env:DARAJA_PASS_KEY}",
+        "DARAJA_ENVIRONMENT": "${env:DARAJA_ENVIRONMENT}",
+        "DARAJA_INITIATOR_NAME": "${env:DARAJA_INITIATOR_NAME}",
+        "DARAJA_INITIATOR_PASSWORD": "${env:DARAJA_INITIATOR_PASSWORD}"
+      }
+    }
+  }
+}

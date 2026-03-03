@@ -21,7 +21,7 @@ build/
 *.tar.gz
 
 # IDE files
-.vscode/
+# .vscode/
 .idea/
 *.swp
 *.swo

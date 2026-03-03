@@ -25,10 +25,12 @@ Claude Desktop is the most popular way to use MCP servers with Claude.
 ### Installation Steps
 
 1. **Install Claude Desktop**
+
    - Download from [claude.ai](https://claude.ai/download)
    - Available for macOS and Windows
 
 2. **Open Configuration**
+
    - Click the Settings icon (⚙️) in the bottom corner
    - Select the "Developer" tab
    - Click "Edit Config" to open `claude_desktop_config.json`
@@ -62,9 +64,11 @@ Claude Desktop is the most popular way to use MCP servers with Claude.
 ### Platform-Specific Notes
 
 **macOS:**
+
 - Configuration file location: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
 **Windows:**
+
 - Configuration file location: `%APPDATA%\Claude\claude_desktop_config.json`
 - Use forward slashes `/` or double backslashes `\\\\` in paths
 
@@ -98,12 +102,14 @@ Follow the interactive prompts to configure your credentials.
 #### Method 2: Direct Configuration (Recommended for advanced users)
 
 1. **Find your configuration file:**
+
    ```bash
    # Show current config path
    claude config path
    ```
 
 2. **Edit the configuration file:**
+
    ```json
    {
      "mcp": {
@@ -126,10 +132,11 @@ Follow the interactive prompts to configure your credentials.
    ```
 
 3. **Verify setup:**
+
    ```bash
    # List available MCP servers
    claude mcp list
-   
+
    # Test the connection
    claude mcp test daraja
    ```
@@ -156,65 +163,63 @@ claude mcp add daraja --command mcp-daraja
 
 ## 🗂️ VS Code
 
-VS Code has built-in MCP support as of version 1.102+.
+VS Code has built-in MCP support with preview features available in recent versions.
+
+### Prerequisites
+
+- **VS Code Version**: Latest version recommended (1.102+ for full MCP support)
+- **Extensions**: Ensure VS Code is updated to the latest version
+- **Node.js**: Version 18+ required for running MCP servers
 
 ### Setup Steps
 
-1. **Update VS Code**
-   - Ensure you have VS Code 1.102 or later
-   - Update extensions if needed
+1. **Install the Daraja MCP Package**
 
-2. **Enable MCP Support**
-   - Open VS Code Settings (`Cmd/Ctrl + ,`)
-   - Search for "chat.mcp.enabled"
-   - Set to `true` (enabled by default in recent versions)
+   ```bash
+   npm install -g @meshark/safaricom-daraja-mcp
+   ```
 
-3. **Enable Agent Mode**
-   - Search for "chat.agent.enabled"
-   - Set to `true`
-   - Select "Agent" in the Chat mode dropdown
+2. **Enable MCP Support in VS Code**
 
-4. **Configure MCP Server**
-
-   Create or edit `.vscode/settings.json` in your project:
+   Create or edit `.vscode/settings.json` in your workspace:
 
    ```json
    {
-     "mcp": {
-       "servers": {
-         "daraja": {
-           "command": "mcp-daraja",
-           "env": {
-             "DARAJA_CONSUMER_KEY": "your_consumer_key_here",
-             "DARAJA_CONSUMER_SECRET": "your_consumer_secret_here",
-             "DARAJA_BUSINESS_SHORT_CODE": "your_business_shortcode",
-             "DARAJA_PASS_KEY": "your_pass_key_here",
-             "DARAJA_ENVIRONMENT": "sandbox",
-             "DARAJA_INITIATOR_NAME": "your_initiator_name",
-             "DARAJA_INITIATOR_PASSWORD": "your_initiator_password"
-           }
+     "chat.mcp.enabled": true,
+     "chat.agent.enabled": true,
+     "mcp.discovery.enabled": true
+   }
+   ```
+
+3. **Configure MCP Server**
+
+   Create `.vscode/mcp.json` in your workspace root:
+
+   ```json
+   {
+     "servers": {
+       "daraja": {
+         "type": "stdio",
+         "command": "mcp-daraja",
+         "env": {
+           "DARAJA_CONSUMER_KEY": "${env:DARAJA_CONSUMER_KEY}",
+           "DARAJA_CONSUMER_SECRET": "${env:DARAJA_CONSUMER_SECRET}",
+           "DARAJA_BUSINESS_SHORT_CODE": "${env:DARAJA_BUSINESS_SHORT_CODE}",
+           "DARAJA_PASS_KEY": "${env:DARAJA_PASS_KEY}",
+           "DARAJA_ENVIRONMENT": "${env:DARAJA_ENVIRONMENT}",
+           "DARAJA_INITIATOR_NAME": "${env:DARAJA_INITIATOR_NAME}",
+           "DARAJA_INITIATOR_PASSWORD": "${env:DARAJA_INITIATOR_PASSWORD}"
          }
        }
      }
    }
    ```
 
-5. **Verify Installation**
-   - Open Command Palette (`Cmd/Ctrl + Shift + P`)
-   - Run "MCP: Show Installed Servers"
-   - Confirm "daraja" appears in the list
-
-### Auto-Discovery
-
-VS Code can auto-discover MCP servers from other tools:
-
-```json
-{
-  "chat.mcp.discovery.enabled": true
-}
-```
-
-This will automatically detect MCP servers configured in Claude Desktop.
+4. **Restart VS Code and Verify Setup**
+   - Restart VS Code to load the new MCP configuration
+   - Open Command Palette (`Ctrl/Cmd + Shift + P`)
+   - Run "MCP: List Servers" to verify the Daraja server appears
+   - Enable Agent mode in VS Code Chat interface
 
 ---
 
@@ -225,6 +230,7 @@ Cursor uses a similar configuration to Claude Desktop but with some differences.
 ### Configuration
 
 1. **Open Cursor Settings**
+
    - Go to Cursor > Settings > Features > MCP Servers
 
 2. **Add Server Configuration**
@@ -262,7 +268,7 @@ For containerized environments or easier deployment.
 Create `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   daraja-mcp:
     image: node:18-alpine
@@ -285,6 +291,7 @@ services:
 ```
 
 Create `.env` file:
+
 ```env
 DARAJA_CONSUMER_KEY=your_consumer_key_here
 DARAJA_CONSUMER_SECRET=your_consumer_secret_here
@@ -295,6 +302,7 @@ DARAJA_INITIATOR_PASSWORD=your_initiator_password
 ```
 
 Run with:
+
 ```bash
 docker-compose up -d
 ```
@@ -308,26 +316,26 @@ For building your own MCP client integration.
 ### Basic Client Example
 
 ```javascript
-import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
 // Create transport
 const transport = new StdioClientTransport({
-  command: 'mcp-daraja',
+  command: "mcp-daraja",
   env: {
-    DARAJA_CONSUMER_KEY: 'your_consumer_key_here',
-    DARAJA_CONSUMER_SECRET: 'your_consumer_secret_here',
-    DARAJA_BUSINESS_SHORT_CODE: 'your_business_shortcode',
-    DARAJA_PASS_KEY: 'your_pass_key_here',
-    DARAJA_ENVIRONMENT: 'sandbox',
-    DARAJA_INITIATOR_NAME: 'your_initiator_name',
-    DARAJA_INITIATOR_PASSWORD: 'your_initiator_password'
-  }
+    DARAJA_CONSUMER_KEY: "your_consumer_key_here",
+    DARAJA_CONSUMER_SECRET: "your_consumer_secret_here",
+    DARAJA_BUSINESS_SHORT_CODE: "your_business_shortcode",
+    DARAJA_PASS_KEY: "your_pass_key_here",
+    DARAJA_ENVIRONMENT: "sandbox",
+    DARAJA_INITIATOR_NAME: "your_initiator_name",
+    DARAJA_INITIATOR_PASSWORD: "your_initiator_password",
+  },
 });
 
 // Create client
 const client = new Client(
-  { name: 'daraja-client', version: '1.0.0' },
+  { name: "daraja-client", version: "1.0.0" },
   { capabilities: {} }
 );
 
@@ -336,28 +344,28 @@ await client.connect(transport);
 
 // List available tools
 const tools = await client.request({
-  method: 'tools/list',
-  params: {}
+  method: "tools/list",
+  params: {},
 });
 
-console.log('Available tools:', tools.result.tools);
+console.log("Available tools:", tools.result.tools);
 
 // Call STK Push tool
 const stkResult = await client.request({
-  method: 'tools/call',
+  method: "tools/call",
   params: {
-    name: 'daraja_stk_push',
+    name: "daraja_stk_push",
     arguments: {
       amount: 100,
-      phone_number: '254708374149',
-      callback_url: 'https://your-domain.com/callback',
-      account_reference: 'TEST123',
-      transaction_desc: 'Test Payment'
-    }
-  }
+      phone_number: "254708374149",
+      callback_url: "https://your-domain.com/callback",
+      account_reference: "TEST123",
+      transaction_desc: "Test Payment",
+    },
+  },
 });
 
-console.log('STK Push result:', stkResult.result);
+console.log("STK Push result:", stkResult.result);
 ```
 
 ---
@@ -386,15 +394,18 @@ DARAJA_INITIATOR_PASSWORD=your_initiator_password
 ### Credential Security
 
 **Development:**
+
 - Use `.env` files (never commit to git)
 - Use different credentials for sandbox vs production
 
 **Production:**
+
 - Use environment variables or secure secret management
 - Rotate credentials regularly
 - Monitor API usage
 
 **Team Setup:**
+
 - Share `.env.example` template
 - Document credential acquisition process
 - Use team-specific sandbox credentials
@@ -406,9 +417,11 @@ DARAJA_INITIATOR_PASSWORD=your_initiator_password
 Once configured, you'll have access to these 11 Daraja API tools:
 
 ### Authentication
+
 - `daraja_generate_token` - Generate OAuth access tokens
 
 ### Payment Operations
+
 - `daraja_stk_push` - Initiate M-Pesa Express payments
 - `daraja_stk_query` - Query STK Push transaction status
 - `daraja_c2b_register` - Register C2B payment URLs
@@ -417,6 +430,7 @@ Once configured, you'll have access to these 11 Daraja API tools:
 - `daraja_b2b_payment` - Transfer between business accounts
 
 ### Utility Operations
+
 - `daraja_account_balance` - Check M-Pesa account balance
 - `daraja_transaction_status` - Query transaction status
 - `daraja_reversal` - Reverse transactions
@@ -429,16 +443,19 @@ Once configured, you'll have access to these 11 Daraja API tools:
 ### Common Issues
 
 **MCP Server Not Appearing:**
+
 - Verify npm package is installed globally: `npm list -g @meshark/safaricom-daraja-mcp`
 - Check MCP client logs for connection errors
 - Ensure configuration file syntax is valid JSON
 
 **Authentication Errors:**
+
 - Verify credentials in Safaricom Developer Portal
 - Confirm environment (sandbox/production) matches credentials
 - Check credential environment variables are set
 
 **Connection Issues:**
+
 - Restart MCP client after configuration changes
 - Check firewall settings for localhost connections
 - Verify Node.js version compatibility (18+)
@@ -446,6 +463,7 @@ Once configured, you'll have access to these 11 Daraja API tools:
 ### Debug Logs
 
 **Claude Desktop:**
+
 ```bash
 # macOS
 tail -f ~/Library/Logs/Claude/mcp*.log
@@ -455,6 +473,7 @@ type %APPDATA%\Claude\Logs\mcp*.log
 ```
 
 **Claude Code:**
+
 ```bash
 # Enable debug mode
 CLAUDE_DEBUG=1 claude <command>
@@ -464,6 +483,7 @@ claude logs mcp
 ```
 
 **VS Code:**
+
 - Open Developer Tools (`Help > Toggle Developer Tools`)
 - Check console for MCP-related errors
 
@@ -487,6 +507,7 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' | mcp-daraja
 **Prompt:** "Use the Daraja MCP to initiate a 100 KSH payment request to phone number 254708374149 for order reference ORDER123"
 
 The MCP will:
+
 1. Generate authentication token
 2. Initiate STK Push with provided details
 3. Return checkout request ID for tracking
@@ -496,6 +517,7 @@ The MCP will:
 **Prompt:** "Check the status of Daraja transaction with checkout request ID ws_CO_123456789"
 
 The MCP will:
+
 1. Query the transaction status
 2. Return current status and details
 3. Provide status interpretation
@@ -505,8 +527,9 @@ The MCP will:
 **Prompt:** "Send 500 KSH to customer 254712345678 as a business payment with remarks 'Refund for Order #456'"
 
 The MCP will:
+
 1. Validate initiator credentials
-2. Process B2C payment request  
+2. Process B2C payment request
 3. Return transaction details
 
 ---
@@ -537,13 +560,15 @@ mcp-daraja --version
 If this MCP integration guide has been helpful, consider supporting the project:
 
 ### ☕ Buy Me a Coffee
+
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-orange?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/meshhack)
 
 ### 📱 M-Pesa (Kenya)
+
 For local supporters in Kenya:  
 **📞 +254 702 152 220** (Meshack Musyoka)
 
-*Your support helps maintain and improve this open-source MCP server! 🙏*
+_Your support helps maintain and improve this open-source MCP server! 🙏_
 
 ---
 
