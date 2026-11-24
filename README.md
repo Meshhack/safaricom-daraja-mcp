@@ -9,6 +9,8 @@ A comprehensive Model Context Protocol (MCP) implementation for the Safaricom Da
 
 **Developed by:** Meshack Musyoka
 
+<a href="https://mcprush.com/to/safaricom-daraja-mcp?ref=badge"><img width="380" height="200" src="https://mcprush.com/badge/safaricom-daraja-mcp/card.svg" alt="Safaricom Daraja MCP server" /></a>
+
 ## 🚀 Features
 
 ### Core Payment Operations
